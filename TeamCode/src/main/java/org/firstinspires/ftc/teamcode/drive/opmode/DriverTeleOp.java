@@ -11,7 +11,7 @@ public class DriverTeleOp extends Hardware {
     public void runOpMode() throws InterruptedException {
 
         waitForStart();
-
+        initialize();
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
