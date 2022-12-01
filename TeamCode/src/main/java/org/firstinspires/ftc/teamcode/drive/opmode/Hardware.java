@@ -26,6 +26,7 @@ public class Hardware extends LinearOpMode {
         // Reverse all right things
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        turret.setDirection(DcMotorSimple.Direction.REVERSE);
         leftServo.setDirection(Servo.Direction.REVERSE);
 
         liftOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
