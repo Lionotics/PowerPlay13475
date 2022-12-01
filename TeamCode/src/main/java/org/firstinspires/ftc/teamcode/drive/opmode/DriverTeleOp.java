@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name = "TELEOP")
 public class DriverTeleOp extends Hardware {
+    double servoPos = 0;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -20,6 +22,7 @@ public class DriverTeleOp extends Hardware {
             double rx = gamepad1.right_stick_x;
             int sliderPower;
             double turnPower;
+
 
             if (gamepad2.dpad_up){
                 sliderPower = 1;
@@ -36,7 +39,12 @@ public class DriverTeleOp extends Hardware {
             } else {
                 turnPower = 0;
             }
-
+            if (gamepad2.a){
+                servoPos = .5;
+            } else if (gamepad2.b){
+                servoPos = 0;
+            }
+            setServos(servoPos);
             turnTurret(turnPower);
             moveSliders(sliderPower);
             drive(y,x, rx);

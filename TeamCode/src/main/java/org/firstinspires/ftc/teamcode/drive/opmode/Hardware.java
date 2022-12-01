@@ -27,7 +27,7 @@ public class Hardware extends LinearOpMode {
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         turret.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftServo.setDirection(Servo.Direction.REVERSE);
+        //leftServo.setDirection(Servo.Direction.REVERSE);
 
         liftOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -70,6 +70,10 @@ public class Hardware extends LinearOpMode {
         int multiplier = 1;
         liftOne.setPower(power * multiplier);
         liftTwo.setPower(power * multiplier);
+    }
+    public void setServos(double pos){
+        leftServo.setPosition(pos);
+        rightServo.setPosition(pos);
     }
     public void turnTurret (double power){
         turret.setPower(power);
