@@ -4,8 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "TELEOP")
 public class DriverTeleOp extends Hardware {
-    double leftServoPos = 0;
-    double rightServoPos = 0;
+    double servoPos = 999.0;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -37,14 +36,20 @@ public class DriverTeleOp extends Hardware {
             } else {
                 turnPower = 0;
             }
+
             if (gamepad2.a){
-                leftServoPos = 0.2;
-                rightServoPos = 0.9;
+                // open
+                servoPos = 0.2;
             } else if (gamepad2.b){
-                leftServoPos = 0.3;
-                rightServoPos = 0.8;
+                // close
+                servoPos = 0.3;
             }
-            setServos(leftServoPos,rightServoPos);
+            if (servoPos != 999.0) {
+                setServos(servoPos);
+            }
+
+            telemetry.addLine(String.valueOf(servoPos));
+            telemetry.update();
             turnTurret(turnPower);
             moveSliders(sliderPower);
             drive(y,x, rx);
