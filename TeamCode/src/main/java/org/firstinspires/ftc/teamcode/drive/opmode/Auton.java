@@ -34,7 +34,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 import java.util.ArrayList;
 
 @TeleOp
-public class Auton extends LinearOpMode
+public class Auton extends Hardware
 {
     //INTRODUCE VARIABLES HERE
 
@@ -156,24 +156,33 @@ public class Auton extends LinearOpMode
             sleep(20);
         }
 
-
-
-
-
         if(tagOfInterest != null)
         {
-            telemetry.addLine("Tag snapshot:\n");
+            telemetry.addLine("The robot assumes the tag is:\n");
             tagToTelemetry(tagOfInterest);
             telemetry.update();
         }
         else
         {
-            telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
+            telemetry.addLine("The robot couldn't find the tag. Guessing MIDDLE");
             telemetry.update();
         }
 
-        //PUT AUTON CODE HERE (DRIVER PRESSED THE PLAY BUTTON!)
-
+        //DRIVER PRESSED THE PLAY BUTTON!
+        switch (tagOfInterest) {
+            case 'LEFT':
+                //TODO Drive straight, strafe left
+                break;
+            case 'Middle'
+                //TODO Drive straight
+                break;
+            case 'RIGHT'
+                //TODO Drive straight, strafe right
+                break;
+            default:
+                // Assume straight (1/3)
+                //TODO Drive straight
+        }
     }
 
     void tagToTelemetry(AprilTagDetection detection)
