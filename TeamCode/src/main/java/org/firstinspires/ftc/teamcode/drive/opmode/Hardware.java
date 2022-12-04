@@ -21,7 +21,7 @@ public class Hardware extends LinearOpMode {
         liftTwo = hardwareMap.dcMotor.get("liftTwo");
         turret = hardwareMap.dcMotor.get("turret");
         leftServo = hardwareMap.servo.get("leftServo");
-        rightServo = hardwareMap.servo.get("leftServo");
+        rightServo = hardwareMap.servo.get("rightServo");
 
         // Reverse all right things
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -36,7 +36,7 @@ public class Hardware extends LinearOpMode {
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -71,9 +71,9 @@ public class Hardware extends LinearOpMode {
         liftOne.setPower(power * multiplier);
         liftTwo.setPower(power * multiplier);
     }
-    public void setServos(double pos){
+    public void setServos(double pos, double rpos){
         leftServo.setPosition(pos);
-        rightServo.setPosition(pos);
+        rightServo.setPosition(rpos);
     }
     public void turnTurret (double power){
         turret.setPower(power);
