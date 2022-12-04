@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name = "TELEOP")
 public class DriverTeleOp extends Hardware {
-    double servoPos = 0;
+    double leftServoPos = 0;
+    double rightServoPos = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -33,18 +31,20 @@ public class DriverTeleOp extends Hardware {
             }
 
             if (gamepad2.dpad_left){
-                turnPower = -.5;
+                turnPower = -.3;
             } else if (gamepad2.dpad_right){
-                turnPower = .5;
+                turnPower = .4;
             } else {
                 turnPower = 0;
             }
             if (gamepad2.a){
-                servoPos = .5;
+                leftServoPos = 0.2;
+                rightServoPos = 0.9;
             } else if (gamepad2.b){
-                servoPos = 0;
+                leftServoPos = 0.3;
+                rightServoPos = 0.8;
             }
-            setServos(servoPos);
+            setServos(leftServoPos,rightServoPos);
             turnTurret(turnPower);
             moveSliders(sliderPower);
             drive(y,x, rx);
