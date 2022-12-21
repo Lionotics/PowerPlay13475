@@ -33,11 +33,12 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 import java.util.ArrayList;
 
-@TeleOp
-public class Auton extends Hardware
-{
-    //INTRODUCE VARIABLES HERE
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.linearOpMode;
 
+@TeleOp
+public class Auton extends LinearOpMode
+{
+    RobotObject   robot       = new RobotObject(this);
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
@@ -92,7 +93,7 @@ public class Auton extends Hardware
 
 
         //HARDWARE MAPPING HERE etc.
-        initialize();
+        robot.init();
 
         /*
          * The INIT-loop:
@@ -114,9 +115,6 @@ public class Auton extends Hardware
                         tagFound = true;
                         break;
                     }
-                    if (tag.id == 1){theRealTag =1;}
-                    if (tag.id == 2){theRealTag =2;}
-                    if (tag.id == 3){theRealTag =3;}
                 }
 
                 if(tagFound)
@@ -173,20 +171,12 @@ public class Auton extends Hardware
         }
 
         //DRIVER PRESSED THE PLAY BUTTON!
-        switch (theRealTag) {
-            case 1:
-                encoderDriveAnd(.75, 22.5, 22.5, 22.5,22.5);
-                break;
-            case 2:
-
-                encoderDriveAnd(.75, 22.5, 22.5, 22.5,22.5);
-                break;
-            case 3:
-                //TODO Drive straight, strafe right
-                break;
-            default:
-                // Assume straight (1/3)
-                encoderDriveAnd(.75, 22.5, 22.5, 22.5,22.5);
+        if (tagOfInterest.id == LEFT) {
+            //TODO Drive straight, strafe left
+        } else if (tagOfInterest.id == RIGHT) {
+            //TODO Drive straight, strafe right
+        } else { // Middle or Guess
+            //TODO Drive straight
         }
     }
 
