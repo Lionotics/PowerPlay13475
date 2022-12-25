@@ -11,7 +11,7 @@ public class DriverTeleOp extends LinearOpMode {
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
-    RobotObject   robot       = new RobotObject(this);
+    RobotObject robot = new RobotObject(this);
 
     @Override
     public void runOpMode() throws InterruptedException {

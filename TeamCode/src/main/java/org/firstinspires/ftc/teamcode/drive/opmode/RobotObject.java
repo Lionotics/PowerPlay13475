@@ -29,27 +29,39 @@
 
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 
+import static java.lang.Math.toRadians;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 public class RobotObject {
 
-    // Define Drive constants.  Make them public so they CAN be used by the calling OpMode
+    // Define Drive constants They are public, so they CAN be used by the calling OpMode
     public static final double MID_SERVO       =  0.5 ;
     /* Declare OpMode members. */
     private LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
-    // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
+    // Define Motor and Servo objects  (Make them private, so they can't be accessed externally)
     private DcMotor frontLeft, frontRight, backLeft, backRight, liftOne, liftTwo, turret;
     private Servo leftServo, rightServo;
     private BNO055IMU imu;
     double servoPos;
     double sliderPower;
     double turretPower;
+    //Define positions on the field for rr
+    Pose2d startingPos;
+    Vector2d parkPos;
+    //TODO: Actually set these
+    final Pose2d LEFT_STARTING = new Pose2d(0,0,toRadians(0));
+    final Pose2d RIGHT_STARTING = new Pose2d(0,0,toRadians(0));
+    final Vector2d LEFT_PARK = new Vector2d(0,0);
+    final Vector2d RIGHT_PARK = new Vector2d(0,0);
+    final Vector2d MIDDLE_PARK = new Vector2d(0,0);
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public RobotObject(LinearOpMode opmode) {
@@ -59,8 +71,7 @@ public class RobotObject {
     /**
      * Initialize all the robot's hardware.
      * This method must be called ONCE when the OpMode is initialized.
-     *
-     * All of the hardware devices are accessed via the hardware map, and initialized.
+     * All the hardware devices are accessed via the hardware map, and initialized.
      */
     public void init()    {
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
@@ -148,5 +159,5 @@ public class RobotObject {
     public void updateTurret (){
         turret.setPower(turretPower);
     }
-    // TODO: Add a RR PID drive method
+    // TODO: Add a drive method which considers goofy tilted robot
 }
