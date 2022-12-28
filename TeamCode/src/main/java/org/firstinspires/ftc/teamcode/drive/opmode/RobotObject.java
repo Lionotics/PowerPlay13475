@@ -29,16 +29,15 @@
 
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
+import static java.lang.Math.toRadians;
+
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-
-import static java.lang.Math.toRadians;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 public class RobotObject {
 
@@ -57,8 +56,8 @@ public class RobotObject {
     Pose2d startingPos;
     Vector2d parkPos;
     //TODO: Actually set these
-    final Pose2d LEFT_STARTING = new Pose2d(0,0,toRadians(0));
-    final Pose2d RIGHT_STARTING = new Pose2d(0,0,toRadians(0));
+    final Pose2d LEFT_STARTING = new Pose2d(35,35,toRadians(0));
+    final Pose2d RIGHT_STARTING = new Pose2d(35,35,toRadians(0));
     final Vector2d LEFT_PARK = new Vector2d(0,0);
     final Vector2d RIGHT_PARK = new Vector2d(0,0);
     final Vector2d MIDDLE_PARK = new Vector2d(0,0);
@@ -74,15 +73,15 @@ public class RobotObject {
      * All the hardware devices are accessed via the hardware map, and initialized.
      */
     public void init()    {
-        frontLeft = hardwareMap.dcMotor.get("frontLeft");
-        frontRight = hardwareMap.dcMotor.get("frontRight");
-        backLeft = hardwareMap.dcMotor.get("backLeft");
-        backRight = hardwareMap.dcMotor.get("backRight");
-        liftOne = hardwareMap.dcMotor.get("liftOne");
-        liftTwo = hardwareMap.dcMotor.get("liftTwo");
-        turret = hardwareMap.dcMotor.get("turret");
-        leftServo = hardwareMap.servo.get("leftServo");
-        rightServo = hardwareMap.servo.get("rightServo");
+        frontLeft = myOpMode.hardwareMap.dcMotor.get("frontLeft");
+        frontRight = myOpMode.hardwareMap.dcMotor.get("frontRight");
+        backLeft = myOpMode.hardwareMap.dcMotor.get("backLeft");
+        backRight = myOpMode.hardwareMap.dcMotor.get("backRight");
+        liftOne = myOpMode.hardwareMap.dcMotor.get("liftOne");
+        liftTwo = myOpMode.hardwareMap.dcMotor.get("liftTwo");
+        turret = myOpMode.hardwareMap.dcMotor.get("turret");
+        leftServo = myOpMode.hardwareMap.servo.get("leftServo");
+        rightServo = myOpMode.hardwareMap.servo.get("rightServo");
 
         // Reverse all right things
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -100,7 +99,7 @@ public class RobotObject {
         turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu = myOpMode.hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         // Technically this is the default, however specifying it is clearer
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
