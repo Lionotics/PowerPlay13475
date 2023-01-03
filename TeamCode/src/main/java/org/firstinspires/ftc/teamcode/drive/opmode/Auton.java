@@ -167,7 +167,7 @@ public class Auton extends LinearOpMode
             telemetry.update();
             sleep(20);
         }
-
+        //DRIVER PRESSED THE PLAY BUTTON!
         if(tagOfInterest != null)
         {
             telemetry.addLine("The robot assumes the tag is:\n");
@@ -180,13 +180,15 @@ public class Auton extends LinearOpMode
             telemetry.update();
         }
 
-        //DRIVER PRESSED THE PLAY BUTTON!
+
 
         if (!startUpdated){ //Have to guess
             robot.startingPos = robot.RIGHT_STARTING;
         }
 
-        if (tagOfInterest.id == LEFT) {
+        if (tagOfInterest == null){
+            robot.parkPos = robot.MIDDLE_PARK;
+        } else if (tagOfInterest.id == LEFT) {
             robot.parkPos = robot.LEFT_PARK;
         } else if (tagOfInterest.id == RIGHT) {
             robot.parkPos = robot.RIGHT_PARK;
