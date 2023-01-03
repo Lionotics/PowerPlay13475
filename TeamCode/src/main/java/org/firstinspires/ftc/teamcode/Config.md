@@ -6,8 +6,8 @@
 - 2 - frontLeft - 5202/3/4
 - 3 - backLeft - 5202/3/4
 ### Servos
-- 2 - leftServo - Servo
-- 3 - rightServo - Servo
+- 1 - leftServo - Servo
+- 0 - rightServo - Servo
 ## Expansion Hub 2
 ### Motors
 - 1 - liftTwo - 5202/3/4

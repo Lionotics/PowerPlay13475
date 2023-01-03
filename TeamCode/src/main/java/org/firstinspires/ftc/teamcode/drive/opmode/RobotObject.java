@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static java.lang.Math.toRadians;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -36,6 +37,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -46,7 +48,7 @@ public class RobotObject {
     /* Declare OpMode members. */
     private LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
     // Define Motor and Servo objects  (Make them private, so they can't be accessed externally)
-    private DcMotor frontLeft, frontRight, backLeft, backRight, liftOne, liftTwo, turret;
+    private DcMotorEx frontLeft, frontRight, backLeft, backRight, liftOne, liftTwo, turret;
     private Servo leftServo, rightServo;
     private BNO055IMU imu;
     double servoPos;
@@ -73,13 +75,13 @@ public class RobotObject {
      * All the hardware devices are accessed via the hardware map, and initialized.
      */
     public void init()    {
-        frontLeft = myOpMode.hardwareMap.dcMotor.get("frontLeft");
-        frontRight = myOpMode.hardwareMap.dcMotor.get("frontRight");
-        backLeft = myOpMode.hardwareMap.dcMotor.get("backLeft");
-        backRight = myOpMode.hardwareMap.dcMotor.get("backRight");
-        liftOne = myOpMode.hardwareMap.dcMotor.get("liftOne");
-        liftTwo = myOpMode.hardwareMap.dcMotor.get("liftTwo");
-        turret = myOpMode.hardwareMap.dcMotor.get("turret");
+        frontLeft = (DcMotorEx) myOpMode.hardwareMap.dcMotor.get("frontLeft");
+        frontRight = (DcMotorEx) myOpMode.hardwareMap.dcMotor.get("frontRight");
+        backLeft = (DcMotorEx) myOpMode.hardwareMap.dcMotor.get("backLeft");
+        backRight = (DcMotorEx) myOpMode.hardwareMap.dcMotor.get("backRight");
+        liftOne = (DcMotorEx) myOpMode.hardwareMap.dcMotor.get("liftOne");
+        liftTwo = (DcMotorEx) myOpMode.hardwareMap.dcMotor.get("liftTwo");
+        turret = (DcMotorEx) myOpMode.hardwareMap.dcMotor.get("turret");
         leftServo = myOpMode.hardwareMap.servo.get("leftServo");
         rightServo = myOpMode.hardwareMap.servo.get("rightServo");
 
@@ -130,6 +132,13 @@ public class RobotObject {
         double backLeftPower = (rotY - rotX + rx) / denominator;
         double frontRightPower = (rotY - rotX - rx) / denominator;
         double backRightPower = (rotY + rotX - rx) / denominator;
+
+        telemetry.addLine(String.valueOf(frontLeft.getVelocity()));
+        telemetry.addLine(String.valueOf(frontRight.getVelocity()));
+        telemetry.addLine(String.valueOf(backLeft.getVelocity()));
+        telemetry.addLine(String.valueOf(backRight.getVelocity()));
+        telemetry.update();
+        telemetry.clear();
 
         frontLeft.setPower(frontLeftPower);
         backLeft.setPower(backLeftPower);
