@@ -22,6 +22,7 @@
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -34,7 +35,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@TeleOp
+@Autonomous
 public class Auton extends LinearOpMode
 {
     RobotObject robot = new RobotObject(this);
@@ -196,12 +197,15 @@ public class Auton extends LinearOpMode
             robot.parkPos = robot.MIDDLE_PARK;
         }
 
-        //Build the trajectory with our new park and start var
-        Trajectory park = drive.trajectoryBuilder(robot.startingPos)
-                .splineTo(robot.parkPos, Math.toRadians(0))
-                .build();
-        //Follow it
-        drive.followTrajectory(park);
+        robot.encoderDriveAnd(0.5,25,25,25,25);
+        //        //Build the trajectory with our new park and start var
+//        Trajectory park = drive.trajectoryBuilder(robot.startingPos)
+//                .splineTo(robot.parkPos, Math.toRadians(0))
+//                .build();
+//        //Follow it
+//        drive.followTrajectory(park);
+
+
     }
 
     void tagToTelemetry(AprilTagDetection detection)

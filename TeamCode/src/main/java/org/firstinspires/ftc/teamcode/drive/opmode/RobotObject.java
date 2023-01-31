@@ -64,6 +64,9 @@ public class RobotObject {
     final Vector2d RIGHT_PARK = new Vector2d(0,0);
     final Vector2d MIDDLE_PARK = new Vector2d(0,0);
 
+    static final double     COUNTS_PER_INCH         = (537.7 * 1) /
+            (3.779528 * Math.PI);
+
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public RobotObject(LinearOpMode opmode) {
         myOpMode = opmode;
@@ -133,18 +136,61 @@ public class RobotObject {
         double frontRightPower = (rotY - rotX - rx) / denominator;
         double backRightPower = (rotY + rotX - rx) / denominator;
 
-        telemetry.addLine(String.valueOf(frontLeft.getVelocity()));
-        telemetry.addLine(String.valueOf(frontRight.getVelocity()));
-        telemetry.addLine(String.valueOf(backLeft.getVelocity()));
-        telemetry.addLine(String.valueOf(backRight.getVelocity()));
-        telemetry.update();
-        telemetry.clear();
 
         frontLeft.setPower(frontLeftPower);
         backLeft.setPower(backLeftPower);
         frontRight.setPower(frontRightPower);
         backRight.setPower(backRightPower);
     }
+    public void encoderDriveAnd(double maxPower, double frontRightInches, double frontLeftInches, double backLeftInches, double backRightInches){
+        // stop and reset the encoders? Maybe not. Might want to get position and add from there
+        double newFRTarget;
+        double newFLTarget;
+        double newBLTarget;
+        double newBRTarget;
+
+            //calculate and set target positions
+
+            newFRTarget = frontRight.getCurrentPosition()     +  (frontRightInches * COUNTS_PER_INCH);
+            newFLTarget = frontLeft.getCurrentPosition()     +  (frontLeftInches * COUNTS_PER_INCH);
+            newBLTarget = backLeft.getCurrentPosition()     +  (backLeftInches * COUNTS_PER_INCH);
+            newBRTarget = backRight.getCurrentPosition()     + (backRightInches * COUNTS_PER_INCH);
+
+            backRight.setTargetPosition((int)(newBRTarget));
+            frontRight.setTargetPosition((int)(newFRTarget));
+            frontLeft.setTargetPosition((int)(newFLTarget));
+            backLeft.setTargetPosition((int)(newBLTarget));
+
+            // Run to position
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Set powers. For now I'm setting to maxPower, so be careful.
+            // In the future I'd like to add some acceleration control through powers, which
+            // should help with encoder accuracy. Stay tuned.
+            frontRight.setPower(maxPower);
+            frontLeft.setPower(maxPower);
+            backRight.setPower(maxPower);
+            backLeft.setPower(maxPower);
+
+            while ((frontRight.isBusy() && frontLeft.isBusy() && backRight.isBusy() && backLeft.isBusy() )) {
+
+
+            }
+            // Set Zero Power
+            frontRight.setPower(0);
+            frontLeft.setPower(0);
+            backRight.setPower(0);
+            backLeft.setPower(0);
+
+            // Go back to Run_Using_Encoder
+            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
     /**
      * Moves the slider the inputted amount.
      * The multiplier is in case the sliders need to be slowed down or sped up
