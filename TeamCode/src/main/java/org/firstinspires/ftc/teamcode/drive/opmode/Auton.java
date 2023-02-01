@@ -41,7 +41,6 @@ public class Auton extends LinearOpMode
     RobotObject robot = new RobotObject(this);
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
-    Boolean startUpdated = false;
     static final double FEET_PER_METER = 3.28084;
 
     // Lens intrinsics
@@ -119,7 +118,6 @@ public class Auton extends LinearOpMode
                 if(tagFound)
                 {
                     telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
-                    tagToTelemetry(tagOfInterest);
                 }
                 else
                 {
@@ -152,19 +150,6 @@ public class Auton extends LinearOpMode
                 }
 
             }
-            // Store starting pos based on driver input
-            if (gamepad1.dpad_left || gamepad2.dpad_left){
-                robot.startingPos = robot.LEFT_STARTING;
-                telemetry.addLine("Robot is starting on the left");
-                startUpdated = true;
-            } else if (gamepad1.dpad_right || gamepad2.dpad_right) {
-                robot.startingPos = robot.RIGHT_STARTING;
-                telemetry.addLine("Robot is starting on the right");
-                startUpdated = true;
-            }
-            if (!startUpdated){ // A little urge
-                telemetry.addLine("SELECT STARTING POSITION");
-            }
             telemetry.update();
             sleep(20);
         }
@@ -181,44 +166,12 @@ public class Auton extends LinearOpMode
             telemetry.update();
         }
 
-
-
-        if (!startUpdated){ //Have to guess
-            robot.startingPos = robot.RIGHT_STARTING;
+        robot.encoderDriveAnd(0.5,25,25,25,25); //Drive Forward
+        if(tagOfInterest.id == LEFT){
+        robot.encoderDriveAnd(0.5,-25,-25,25,25); //Strafe Left
+        } else if(tagOfInterest.id == RIGHT){
+        robot.encoderDriveAnd(0.5,25,25,-25,-25); //Strafe Right
         }
-
-        if (tagOfInterest == null){
-            robot.parkPos = robot.MIDDLE_PARK;
-        } else if (tagOfInterest.id == LEFT) {
-            robot.parkPos = robot.LEFT_PARK;
-        } else if (tagOfInterest.id == RIGHT) {
-            robot.parkPos = robot.RIGHT_PARK;
-        } else { // Middle or Guess
-            robot.parkPos = robot.MIDDLE_PARK;
-        }
-
-        robot.encoderDriveAnd(0.5,25,25,25,25);
-        robot.encoderDriveAnd(0.5,-25,-25,25,25);
-
-
-        //        //Build the trajectory with our new park and start var
-//        Trajectory park = drive.trajectoryBuilder(robot.startingPos)
-//                .splineTo(robot.parkPos, Math.toRadians(0))
-//                .build();
-//        //Follow it
-//        drive.followTrajectory(park);
-
-
     }
 
-    void tagToTelemetry(AprilTagDetection detection)
-    {
-        telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
-        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
-        telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
-        telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
-        telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
-    }
 }
