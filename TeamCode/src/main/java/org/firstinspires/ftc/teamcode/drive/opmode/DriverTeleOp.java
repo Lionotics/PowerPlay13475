@@ -44,17 +44,19 @@ public class DriverTeleOp extends LinearOpMode {
 
             if (gamepad2.a){
                 // open
-                robot.servoPos = 0.2;
+                robot.servoPos = 0.1;
+                robot.updateServos();
             } else if (gamepad2.b){
                 // close
-                robot.servoPos = 0.3;
+                robot.servoPos = 0.2;
+                robot.updateServos();
             }
 
             telemetry.addLine(String.valueOf(robot.servoPos));
             telemetry.update();
             robot.updateTurret();
             robot.updateSliders();
-            robot.updateServos();
+            
             robot.drive(y,x, rx);
         }
     }

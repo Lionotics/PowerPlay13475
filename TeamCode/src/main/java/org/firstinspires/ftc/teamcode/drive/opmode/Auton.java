@@ -198,6 +198,9 @@ public class Auton extends LinearOpMode
         }
 
         robot.encoderDriveAnd(0.5,25,25,25,25);
+        robot.encoderDriveAnd(0.5,-25,-25,25,25);
+
+
         //        //Build the trajectory with our new park and start var
 //        Trajectory park = drive.trajectoryBuilder(robot.startingPos)
 //                .splineTo(robot.parkPos, Math.toRadians(0))
