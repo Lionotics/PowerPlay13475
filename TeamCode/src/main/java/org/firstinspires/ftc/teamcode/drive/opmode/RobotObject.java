@@ -181,7 +181,7 @@ public class RobotObject {
             backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            // Set powers. For now I'm setting to maxPower, so be careful.
+            // Set powers. For now, I'm setting to maxPower, so be careful.
             // In the future I'd like to add some acceleration control through powers, which
             // should help with encoder accuracy. Stay tuned.
             frontRight.setPower(maxPower);

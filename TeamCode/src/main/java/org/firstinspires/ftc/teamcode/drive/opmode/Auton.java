@@ -168,9 +168,9 @@ public class Auton extends LinearOpMode
 
         robot.encoderDriveAnd(0.5,25,25,25,25); //Drive Forward
         if(tagOfInterest.id == LEFT){
-        robot.encoderDriveAnd(0.5,-25,-25,25,25); //Strafe Left
+        robot.encoderDriveAnd(0.5,25,-25,25,-25); //Strafe Left
         } else if(tagOfInterest.id == RIGHT){
-        robot.encoderDriveAnd(0.5,25,25,-25,-25); //Strafe Right
+        robot.encoderDriveAnd(0.5,-25,25,-25,25); //Strafe Right
         }
     }
 
