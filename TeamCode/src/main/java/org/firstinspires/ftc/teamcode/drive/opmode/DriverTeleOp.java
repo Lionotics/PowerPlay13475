@@ -57,7 +57,7 @@ public class DriverTeleOp extends LinearOpMode {
             robot.updateTurret();
             robot.updateSliders();
 
-            robot.drive(y,x, rx);
+            robot.drive(y,x, -rx);
         }
     }
 }

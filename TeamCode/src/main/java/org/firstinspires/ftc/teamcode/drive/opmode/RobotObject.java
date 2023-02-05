@@ -150,10 +150,10 @@ public class RobotObject {
         double backRightPower = (rotY + rotX - rx) / denominator;
 
 
-        frontLeft.setPower(frontLeftPower);
-        backLeft.setPower(backLeftPower);
-        frontRight.setPower(frontRightPower);
-        backRight.setPower(backRightPower);
+        frontLeft.setPower(-frontLeftPower);
+        backLeft.setPower(-backLeftPower);
+        frontRight.setPower(-frontRightPower);
+        backRight.setPower(-backRightPower);
     }
     public void sketchyEncoderDrive( double inches, double frontRightPower, double frontLeftPower, double backLeftPower, double backRightPower){
         // stop and reset the encoders? Maybe not. Might want to get position and add from there
