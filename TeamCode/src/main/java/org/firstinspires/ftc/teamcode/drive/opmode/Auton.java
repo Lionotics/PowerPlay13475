@@ -165,14 +165,14 @@ public class Auton extends LinearOpMode
             telemetry.addLine("The robot couldn't find the tag. Guessing MIDDLE");
             telemetry.update();
         }
-
+        //in, fr, fl, bl, br
         robot.sketchyEncoderDrive(25,0.5,0.5,0.5,0.5);
         if(tagOfInterest.id == LEFT){
             robot.sketchyEncoderDrive(28,0.5,-0.5,0.5,-0.5);
 
         }
                 else if(tagOfInterest.id == RIGHT){
-            robot.sketchyEncoderDrive(28,-0.5,0.5,-0.5,0.5);
+            robot.sketchyEncoderDrive(28,-0.2,0.5,-0.5,0.5); //fr is off to fix imperfect strafing
 
         }
 
