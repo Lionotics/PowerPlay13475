@@ -172,7 +172,7 @@ public class Auton extends LinearOpMode
 
         }
                 else if(tagOfInterest.id == RIGHT){
-            robot.sketchyEncoderDrive(28,-0.2,0.5,-0.5,0.5); //fr is off to fix imperfect strafing
+            robot.sketchyEncoderDrive(28,-0.5,0.5,-0.5,0.5); //fr is off to fix imperfect strafing
 
         }
 
