@@ -21,12 +21,29 @@ public class DriverTeleOp extends LinearOpMode {
             double y = -gamepad1.left_stick_y; // Remember, this is reversed!
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
+            int sliderPos = robot.getLift2Position();
 
 
             if (gamepad2.dpad_up){
-                robot.sliderPower = 1;
+                if (sliderPos < 500){
+                    robot.sliderPower = 0.2*sliderPos/500 + 0.8;
+                }
+                else if (sliderPos > 3550) {
+                    robot.sliderPower = 0.5*(4050-sliderPos)/500 + 0.5;
+                }
+                else {
+                    robot.sliderPower = 1;
+                }
             } else if (gamepad2.dpad_down){
-                robot.sliderPower = -1;
+                if (sliderPos < 500){
+                    robot.sliderPower = -0.7*sliderPos/500 - 0.3;
+                }
+                else if (sliderPos > 3550) {
+                    robot.sliderPower = -0.5*(4050-sliderPos)/500 - 0.5;
+                }
+                else {
+                    robot.sliderPower = -1;
+                }
             } else {
                 robot.sliderPower = .1;
             }
@@ -50,6 +67,8 @@ public class DriverTeleOp extends LinearOpMode {
             }
 
             telemetry.addLine(String.valueOf(robot.servoPos));
+            telemetry.addData("Slides pos 2 ",robot.getLift2Position());
+
             telemetry.update();
             robot.updateTurret();
             robot.updateSliders();

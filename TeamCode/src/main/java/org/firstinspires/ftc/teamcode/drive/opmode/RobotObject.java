@@ -29,8 +29,6 @@
 
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opMode;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static java.lang.Math.toRadians;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -300,6 +298,14 @@ public class RobotObject {
             backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
+
+        public int getLift1Position(){
+        return liftOne.getCurrentPosition();
+        }
+    public int getLift2Position(){
+        return liftTwo.getCurrentPosition();
+    }
+
     /**
      * Moves the slider the inputted amount.
      * The multiplier is in case the sliders need to be slowed down or sped up
