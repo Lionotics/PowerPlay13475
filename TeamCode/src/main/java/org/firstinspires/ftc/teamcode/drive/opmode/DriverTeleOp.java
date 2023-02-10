@@ -2,9 +2,6 @@ package org.firstinspires.ftc.teamcode.drive.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.robotcontroller.external.samples.RobotHardware;
-
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.linearOpMode;
 
 @TeleOp(name = "TELEOP")
 public class DriverTeleOp extends LinearOpMode {
@@ -31,7 +28,7 @@ public class DriverTeleOp extends LinearOpMode {
             } else if (gamepad2.dpad_down){
                 robot.sliderPower = -1;
             } else {
-                robot.sliderPower = 0;
+                robot.sliderPower = .1;
             }
 
             if (gamepad2.dpad_left){
