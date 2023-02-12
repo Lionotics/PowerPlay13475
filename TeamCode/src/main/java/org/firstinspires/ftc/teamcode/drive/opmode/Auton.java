@@ -166,14 +166,13 @@ public class Auton extends LinearOpMode
             telemetry.update();
         }
         //in, fr, fl, bl, br
-        robot.sketchyEncoderDrive(25,0.5,0.5,0.5,0.5);
+        robot.sketchyEncoderDrive(26.5,0.5,0.5,0.5,0.5);
         if(tagOfInterest.id == LEFT){
             robot.sketchyEncoderDrive(28,0.5,-0.5,0.5,-0.5);
 
-        }
-                else if(tagOfInterest.id == RIGHT){
-            robot.sketchyEncoderDrive(28,-0.5,0.5,-0.5,0.5); //fr is off to fix imperfect strafing
-
+        } else if(tagOfInterest.id == RIGHT){
+            robot.rotate(true);
+            robot.sketchyEncoderDrive(21,0.5,0.5,0.5,0.5);
         }
 
 

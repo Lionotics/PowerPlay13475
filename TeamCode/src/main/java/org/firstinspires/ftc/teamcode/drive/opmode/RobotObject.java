@@ -154,6 +154,8 @@ public class RobotObject {
         backRight.setPower(-backRightPower);
     }
     public void sketchyEncoderDrive( double inches, double frontRightPower, double frontLeftPower, double backLeftPower, double backRightPower){
+        myOpMode.telemetry.addLine("sketchyencoderdrive");
+        myOpMode.telemetry.update();
         // stop and reset the encoders? Maybe not. Might want to get position and add from there
             double newFRTarget = 0;
               if(frontRightPower > 0) {
@@ -170,7 +172,6 @@ public class RobotObject {
             myOpMode.telemetry.addData("Current", frontRight.getCurrentPosition());
             myOpMode.telemetry.addData("Target",newFRTarget);
             myOpMode.telemetry.update();
-            myOpMode.sleep(1000);
 
 
             // Set powers. For now, I'm setting to maxPower, so be careful. This is called sketchy for a reason
@@ -179,9 +180,8 @@ public class RobotObject {
             backRight.setPower(backRightPower);
             backLeft.setPower(-backLeftPower);
 
-
             if(frontRightPower > 0) {
-                while (newFRTarget - Math.abs(frontRight.getCurrentPosition()) > 15) {
+                while (newFRTarget - frontRight.getCurrentPosition() > 15) {
                     myOpMode.telemetry.addData("Current", frontRight.getCurrentPosition());
                     myOpMode.telemetry.addData("Target", newFRTarget);
                     myOpMode.telemetry.update();
@@ -208,34 +208,55 @@ public class RobotObject {
             backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
-    public void extraSketchyEncoderDrive( double inches, double frontRightPower, double frontLeftPower, double backLeftPower, double backRightPower){
-        // stop and reset the encoders? Maybe not. Might want to get position and add from there
-        double newFLTarget;
-        newFLTarget = frontLeft.getCurrentPosition()     +  (inches * COUNTS_PER_INCH);
-
-        // Run with encoders
+    public void rotate(boolean ccw){
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        myOpMode.telemetry.addData("Current", frontLeft.getCurrentPosition());
-        myOpMode.telemetry.addData("Target",newFLTarget);
+        // stop and reset the encoders? Maybe not. Might want to get position and add from there
+        double newTarget = 0;
+        double mostInches = 19*3;
+        double frPower, flPower, brPower, blPower;
+        if(ccw) {
+            frPower =.5;
+            brPower = .5;
+            flPower = -.5;
+            blPower = -.5;
+            newTarget = frontRight.getCurrentPosition() - (mostInches * COUNTS_PER_INCH);
+        } else {
+            newTarget = frontRight.getCurrentPosition() + (mostInches * COUNTS_PER_INCH);
+            frPower =-.5;
+            brPower = -.5;
+            flPower = .5;
+            blPower = .5;
+        }
+
+        // Run with encoders
+        myOpMode.telemetry.addData("Current", frontRight.getCurrentPosition());
+        myOpMode.telemetry.addData("Target",newTarget);
         myOpMode.telemetry.update();
 
 
         // Set powers. For now, I'm setting to maxPower, so be careful. This is called sketchy for a reason
-        frontRight.setPower(frontRightPower);
-        frontLeft.setPower(-frontLeftPower);
-        backRight.setPower(backRightPower);
-        backLeft.setPower(-backLeftPower);
+        frontRight.setPower(-frPower);
+        frontLeft.setPower(flPower);
+        backRight.setPower(-brPower);
+        backLeft.setPower(blPower);
 
+        if(ccw) {
+            while (Math.abs(newTarget - frontRight.getCurrentPosition()) > 15) {
+                myOpMode.telemetry.addData("Current",  frontRight.getCurrentPosition());
+                myOpMode.telemetry.addData("Target", newTarget);
+                myOpMode.telemetry.update();
 
+            }
+        } else if(!ccw){
+            while ( frontRight.getCurrentPosition() - newTarget > 15) {
+                myOpMode.telemetry.addData("Current", frontRight.getCurrentPosition());
+                myOpMode.telemetry.addData("Target", newTarget);
+                myOpMode.telemetry.update();
 
-        while (newFLTarget - Math.abs(frontLeft.getCurrentPosition()) > 15) {
-            myOpMode.telemetry.addData("Current", frontLeft.getCurrentPosition());
-            myOpMode.telemetry.addData("Target",newFLTarget);
-            myOpMode.telemetry.update();
-
+            }
         }
         // Set Zero Power
         frontRight.setPower(0);
@@ -249,6 +270,7 @@ public class RobotObject {
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
     }
         public void encoderDriveAnd(double maxPower, double frontRightInches, double frontLeftInches, double backLeftInches, double backRightInches){
             // stop and reset the encoders? Maybe not. Might want to get position and add from there
